@@ -9,15 +9,9 @@
 # a_{n + k} =a_{n} + {k \choose 1} \Delta a_{n} + \cdots + {k \choose k} \Delta ^{k}(a_{n})
 # so basically finding the first term in each difference and plugging into the equation.
 
-(def input (slurp "input"))
+(use ../common/common)
 
-(defn split-lines [text]
-  (peg/match
-    ~{
-      :main (any (* (<- :line) 1))
-      :line (any (if-not "\n" 1))
-      }
-    text))
+(def input (slurp "input"))
 
 (def sequence-parse
   (peg/compile

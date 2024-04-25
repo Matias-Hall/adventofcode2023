@@ -1,10 +1,6 @@
-(def input (slurp "input"))
+(use ../common/common)
 
-# Null-coalescing operator stolen from Kotlin.
-(defn ?: [nillable dflt]
-  (if (nil? nillable)
-    dflt
-    nillable))
+(def input (slurp "input"))
 
 (defn create-pipe [row column directions]
   # Rows and columns are 1-indexed, so we decrease both.

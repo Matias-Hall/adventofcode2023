@@ -1,13 +1,6 @@
+(use ../common/common)
 
 (def input (slurp "input"))
-
-(defn split-lines [text]
-  (peg/match
-    ~{
-      :main (any (* (<- :line) 1))
-      :line (any (if-not "\n" 1))
-      }
-    text))
 
 (def sequence-parse
   (peg/compile

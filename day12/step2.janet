@@ -1,5 +1,6 @@
 (use ../common/performance)
 (use ../common/memoize)
+(use ../common/common)
 
 (def input (slurp "input"))
 
@@ -8,20 +9,6 @@
   (def r @[])
   (repeat n (array/push r ;t))
   r)
-
-# Null-coalescing operator stolen from Kotlin.
-(defn ?: [nillable dflt]
-  (if (nil? nillable)
-    dflt
-    nillable))
-
-(defn split-lines [text]
-  (peg/match
-    ~{
-      :main (any (* (<- :line) 1))
-      :line (any (if-not "\n" 1))
-      }
-    text))
 
 (def spring-parse
   (peg/compile

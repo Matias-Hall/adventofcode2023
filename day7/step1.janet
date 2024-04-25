@@ -1,13 +1,6 @@
+(use ../common/common)
+
 (def input (slurp "input"))
-
-(defn split-lines [text]
-  (peg/match
-    ~{
-      :main (any (* (<- :line) 1))
-      :line (any (if-not "\n" 1))
-      }
-    text))
-
 
 (def cards [:2 :3 :4 :5 :6 :7 :8 :9 :T :J :Q :K :A])
 
