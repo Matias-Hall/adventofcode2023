@@ -1,5 +1,5 @@
 (defmacro measure
-  "Measure the performance of function f in seconds + fractional seconds"
+  "Measure the performance of the macro body in seconds + fractional seconds"
   [& forms]
   (with-syms [$before $after]
     ~(do

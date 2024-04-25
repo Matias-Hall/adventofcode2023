@@ -1,6 +1,6 @@
 (use ./performance)
 
-(def input (slurp "test_input"))
+(def input (slurp "input"))
 
 # Null-coalescing operator stolen from Kotlin.
 (defn ?: [nillable dflt]

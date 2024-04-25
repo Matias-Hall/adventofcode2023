@@ -1,5 +1,5 @@
-(use ./performance)
-(use ./memoize)
+(use ../common/performance)
+(use ../common/memoize)
 
 (def input (slurp "input"))
 
