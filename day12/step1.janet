@@ -1,4 +1,4 @@
-(use ./performance)
+(use ../common/performance)
 
 (def input (slurp "input"))
 
