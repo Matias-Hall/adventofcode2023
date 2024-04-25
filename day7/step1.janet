@@ -1,4 +1,5 @@
 (use ../common/common)
+(use ../common/memoize)
 
 (def input (slurp "input"))
 
@@ -15,35 +16,26 @@
 (defn get-play [line]
   (peg/match play-parse line))
 
-# Is memoization necessary? Who knows
-# Is this the best way to memoize? Probably not, I'm sure macros can be used to memoize a function.
-(def memo-hand-strength @{})
-(defn hand-strength [hand]
-  (if (nil? (memo-hand-strength hand))
-    (do
-      (var counts @[])
-      (each card cards
-        (array/push counts (count |(= $ card) hand)))
-      (reverse! (sort counts))
-      # Returns a hand strength number.
-      # 6 is the strongest (five of a kind)
-      # 0 is the weakest (high card)
-      (def strength
-        (cond
-          (= 5 (first counts)) 6
-          (= 4 (first counts)) 5
-          (and
-            (= 3 (first counts))
-            (= 2 (counts 1))) 4
-          (= 3 (first counts)) 3
-          (and
-            (= 2 (first counts))
-            (= 2 (counts 1))) 2
-          (= 2 (first counts)) 1
-          0))
-      (set (memo-hand-strength hand) strength)
-      strength)
-    (memo-hand-strength hand)))
+(defn-memo hand-strength [hand]
+  (var counts @[])
+  (each card cards
+    (array/push counts (count |(= $ card) hand)))
+  (reverse! (sort counts))
+  # Returns a hand strength number.
+  # 6 is the strongest (five of a kind)
+  # 0 is the weakest (high card)
+  (cond
+    (= 5 (first counts)) 6
+    (= 4 (first counts)) 5
+    (and
+      (= 3 (first counts))
+      (= 2 (counts 1))) 4
+    (= 3 (first counts)) 3
+    (and
+      (= 2 (first counts))
+      (= 2 (counts 1))) 2
+    (= 2 (first counts)) 1
+    0))
 
 (defn card< [left right]
   (<
