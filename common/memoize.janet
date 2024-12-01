@@ -41,7 +41,9 @@
   (def name? (take args-index more))
   # -1 in subtraction so that args is not taken.
   (def forms (take (- args-index (length more) -1) more))
-  ~(fn ,;name? ,args (memoize ,args ,;forms)))
+  # ``Inside a quasiquote, the idiom (as-macro ,my-custom-macro arg1 arg2...)
+  # can be used to avoid unwanted variable capture of my-custom-macro.''
+  ~(fn ,;name? ,args (as-macro ,memoize ,args ;forms)))
 
 (defmacro defn-memo
   "Define a memoized function"
@@ -51,4 +53,6 @@
   (def before (take args-index more))
   # -1 in subtraction so that args is not taken.
   (def forms (take (- args-index (length more) -1) more))
-  ~(defn ,name ,;before ,args (memoize ,args ,;forms)))
+  # ``Inside a quasiquote, the idiom (as-macro ,my-custom-macro arg1 arg2...)
+  # can be used to avoid unwanted variable capture of my-custom-macro.''
+  ~(defn ,name ,;before ,args (as-macro ,memoize ,args ,;forms)))
